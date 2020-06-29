@@ -22,6 +22,12 @@ angular.module("Filmes").controller("FilmesController", function($scope){
 
     $scope.novoFilme = {};
 
+    $scope.restForm = function() {
+        $scope.formulario.$setPristine();
+
+        $scope.formulario.$setUntouched();
+    }
+
     $scope.removerFilme = function(id) {
         angular.forEach($scope.filmes, function(filme, i){
             if(filme.id == id){
@@ -30,12 +36,16 @@ angular.module("Filmes").controller("FilmesController", function($scope){
         });
     }
 
-    $scope.adicionarFilme = function(){
+    $scope.adicionarFilme = function(){    
+        if($scope.formulario.$invalid){
+            return
+        }
+
         var filme = angular.copy($scope.novoFilme);
         filme.id = Date.now();
         $scope.filmes.push(filme)
 
         $scope.novoFilme = {};
-
+        
     }
 });
